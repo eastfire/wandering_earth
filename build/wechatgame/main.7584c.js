@@ -71,7 +71,7 @@ window.boot = function () {
         cc.view.enableRetina(true);
         cc.view.resizeWithBrowserSize(true);
 
-        if (!false && !false) {
+        if (!true && !false) {
             if (cc.sys.isBrowser) {
                 setLoadingDisplay();
             }
@@ -135,7 +135,7 @@ window.boot = function () {
         BK.Script.loadlib();
     }
     else {
-        var bundledScript = settings.debug ? 'src/project.dev.js' : 'src/project.bd118.js';
+        var bundledScript = settings.debug ? 'src/project.dev.js' : 'src/project.1d18d.js';
         if (jsList) {
             jsList = jsList.map(function (x) {
                 return 'src/' + x;
@@ -161,7 +161,7 @@ window.boot = function () {
     cc.game.run(option, onStart);
 };
 
-// main.3d557.js is qqplay and jsb platform entry file, so we must leave platform init code here
+// main.7584c.js is qqplay and jsb platform entry file, so we must leave platform init code here
 if (false) {
     BK.Script.loadlib('GameRes://src/settings.js');
     BK.Script.loadlib();
@@ -187,12 +187,12 @@ if (false) {
 else if (window.jsb) {
     var isRuntime = (typeof loadRuntime === 'function');
     if (isRuntime) {
-        require('src/settings.47095.js');
+        require('src/settings.75632.js');
         require('src/cocos2d-runtime.js');
         require('jsb-adapter/engine/index.js');
     }
     else {
-        require('src/settings.47095.js');
+        require('src/settings.75632.js');
         require('src/cocos2d-jsb.js');
         require('jsb-adapter/jsb-engine.js');
     }
