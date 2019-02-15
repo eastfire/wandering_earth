@@ -41,10 +41,18 @@ cc.Class({
         default: null,
         type: cc.Label
       },
-      life: 350000,
+      life: 0,
       lifeUnit: "万",
       score: 0,
       scoreUnit: "亿公里",
+      explosion: {
+        default:null,
+        type: cc.AudioClip
+      },
+      gameOverDialog: {
+        default: null,
+        type: cc.Layout
+      }
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -52,6 +60,7 @@ cc.Class({
     // onLoad () {},
 
     start () {
+      this.gameOverDialog.node.runAction(cc.hide());
       this.earth.getComponent("earth").destX = this.earth.node.x = 0;
 
       this.node.on('touchstart', ( event ) => {
@@ -66,9 +75,14 @@ cc.Class({
         this.earth.getComponent("earth").destX = this.earth.node.x;
       });
       this.time = 10;
+      this.totalTime = 0;
+      this.lastDifficultyChangeTime = 0;
       this.generateTime = 2;
       this.targetLife = this.life;
       Global.game = this;
+      this.isGameOver = false;
+      this.lifeLabel.string = this.life+this.lifeUnit;
+      this.difficulty = 1;
     },
 
     reduceLife(damage){
@@ -79,17 +93,26 @@ cc.Class({
     generateAsteroid() {
       var asteroidPrefab = this.asteroids[Math.floor(Math.random()*this.asteroids.length)]
       var asteroid = cc.instantiate(asteroidPrefab);
-      asteroid.x = (Math.random()-0.5)*this.node.width;
+      asteroid.x = (Math.random()-0.5)*this.node.width*0.85;
       asteroid.y = this.node.height/3*2;
-      asteroid.getComponent("asteroid").attack = Math.floor(Math.random()*500+500);
-      asteroid.getComponent("asteroid").speedY = -Math.floor(Math.random()*50+250);
+      asteroid.getComponent("asteroid").attack = Math.floor((Math.random()*1000+1000)*this.difficulty);
+      asteroid.getComponent("asteroid").speedY = -Math.floor(Math.random()*50*(1+this.difficulty/10)+200);
+      asteroid.getComponent("asteroid").scale = 1+(this.difficulty-1)/5
       this.node.addChild(asteroid)
     },
 
     update (dt) {
+      if ( this.isGameOver )
+        return;
       this.time += dt;
       this.score += dt;
+      this.totalTime += dt;
       this.scoreLabel.string = (Math.round(this.score*100)/100).toFixed(2)+this.scoreUnit;
+      if ( this.time - this.lastDifficultyChangeTime > 5 ) {
+        this.difficulty+=1;
+        this.lastDifficultyChangeTime = this.time;
+        this.generateTime = Math.max(0.4,this.generateTime - 0.2);
+      }
       if ( this.time > this.generateTime ) {
         this.time = 0;
         this.generateAsteroid();
@@ -104,7 +127,12 @@ cc.Class({
         }
       }
     },
+    restart(){
+      cc.director.loadScene("main");
+    },
     gameOver(){
-      
+      this.isGameOver = true;
+      this.earth.node.runAction(cc.sequence(cc.fadeOut(0.5), cc.removeSelf()))
+      this.gameOverDialog.node.runAction(cc.show());
     }
 });

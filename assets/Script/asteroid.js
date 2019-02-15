@@ -43,9 +43,17 @@ cc.Class({
     },
 
     onCollisionEnter(other) {
-      if ( other.getComponent("earth") ) {
+      if ( other.getComponent("earth") && !this.die ) {
+        this.die = true;
+        cc.audioEngine.play(Global.game.explosion, false, 0.5);
+        this.node.runAction(cc.sequence(
+          cc.fadeOut(0.4),
+          cc.callFunc(function(){
+            this.node.destroy();
+          },this)
+        ))
         Global.game.reduceLife(this.attack);
-        this.node.destroy();
+
       }
     },
 
