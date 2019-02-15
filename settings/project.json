@@ -4,24 +4,30 @@
       true
     ]
   ],
-  "design-resolution-height": 1344,
-  "design-resolution-width": 750,
+  "design-resolution-height": 640,
+  "design-resolution-width": 1136,
   "excluded-modules": [
     "Dynamic Atlas",
+    "LabelOutline",
     "TiledMap",
     "Spine Skeleton",
     "DragonBones",
     "RichText",
+    "ProgressBar",
     "ScrollBar",
     "ScrollView",
+    "Toggle",
     "PageView",
     "PageViewIndicator",
     "Slider",
-    "Layout",
     "EditBox",
     "VideoPlayer",
     "WebView",
+    "AudioSource",
     "Physics",
+    "NodePool",
+    "StudioComponent",
+    "Intersection",
     "Native NetWork"
   ],
   "facebook": {
@@ -39,7 +45,7 @@
   "group-list": [
     "default"
   ],
-  "last-module-event-record-time": 0,
+  "last-module-event-record-time": 1550197014195,
   "simulator-orientation": false,
   "simulator-resolution": {
     "height": 640,

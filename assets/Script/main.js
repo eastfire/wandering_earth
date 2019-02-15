@@ -42,7 +42,6 @@ cc.Class({
         type: cc.Label
       },
       life: 0,
-      lifeUnit: "万",
       score: 0,
       scoreUnit: "亿公里",
       explosion: {
@@ -81,13 +80,13 @@ cc.Class({
       this.targetLife = this.life;
       Global.game = this;
       this.isGameOver = false;
-      this.lifeLabel.string = this.life+this.lifeUnit;
+      this._updateLife()
       this.difficulty = 1;
     },
 
     reduceLife(damage){
       this.targetLife = Math.max(0, this.targetLife-damage);
-
+      this.lifeLabel.node.color = cc.Color.RED;
     },
 
     generateAsteroid() {
@@ -95,12 +94,21 @@ cc.Class({
       var asteroid = cc.instantiate(asteroidPrefab);
       asteroid.x = (Math.random()-0.5)*this.node.width*0.85;
       asteroid.y = this.node.height/3*2;
-      asteroid.getComponent("asteroid").attack = Math.floor((Math.random()*1000+1000)*this.difficulty);
-      asteroid.getComponent("asteroid").speedY = -Math.floor(Math.random()*50*(1+this.difficulty/10)+200);
-      asteroid.getComponent("asteroid").scale = 1+(this.difficulty-1)/5
+      asteroid.getComponent("asteroid").attack = Math.floor((Math.random()*5000+5000)*this.difficulty);
+      asteroid.getComponent("asteroid").speedY = -Math.floor(Math.random()*100*(1+(this.difficulty-1)/5)+200);
+      asteroid.setScale(1+Math.random()*Math.min(2,(this.difficulty-1)/10))
       this.node.addChild(asteroid)
     },
-
+    _updateLife(){
+      var yi = Math.floor(this.life/10000);
+      var wan = this.life % 10000;
+      if ( yi ) {
+        this.lifeLabel.string = yi+"亿";
+        if ( wan ) this.lifeLabel.string += wan+"万";
+      } else {
+        this.lifeLabel.string = wan+"万";
+      }
+    },
     update (dt) {
       if ( this.isGameOver )
         return;
@@ -108,23 +116,27 @@ cc.Class({
       this.score += dt;
       this.totalTime += dt;
       this.scoreLabel.string = (Math.round(this.score*100)/100).toFixed(2)+this.scoreUnit;
-      if ( this.time - this.lastDifficultyChangeTime > 5 ) {
+      if ( this.totalTime - this.lastDifficultyChangeTime > 5 ) {
         this.difficulty+=1;
-        this.lastDifficultyChangeTime = this.time;
-        this.generateTime = Math.max(0.4,this.generateTime - 0.2);
+        this.lastDifficultyChangeTime = this.totalTime;
+        this.generateTime = Math.max(0.7,this.generateTime - 0.1);
       }
       if ( this.time > this.generateTime ) {
         this.time = 0;
         this.generateAsteroid();
       }
       if ( this.life > this.targetLife ) {
-        this.life -= Math.floor(Math.random()*10);
-        if ( this.life < this.targetLife )
+        this.life -= Math.round((this.life-this.targetLife)/10)+10;
+        if ( this.life <= this.targetLife ) {
           this.life = this.targetLife;
-        this.lifeLabel.string = this.life+this.lifeUnit;
+          this.lifeLabel.node.color = cc.Color.WHITE;
+        }
+        this._updateLife();
         if ( this.life == 0 ) {
           this.gameOver();
         }
+      } else {
+
       }
     },
     restart(){
