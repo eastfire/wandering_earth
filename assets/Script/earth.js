@@ -39,31 +39,42 @@ cc.Class({
     start () {
       this.accel = 300;
       this.xSpeed = 0;
-      this.maxMoveSpeed = 150;
+      this.maxMoveSpeed = 50;
+    },
+
+    moveTo(destX){
+      var maxX = this.node.parent.width/2*0.8;
+      var minX = -maxX;
+      destX = Math.max(minX, Math.min(destX, maxX))
+      var distance = Math.abs(destX - this.node.x)
+      cc.log("destX"+destX+" distance"+distance)
+      if ( this.moveAction )
+        this.node.stopAction(this.moveAction)
+      this.moveAction = this.node.runAction(cc.moveTo(distance/this.maxMoveSpeed, destX, this.node.y).easing(cc.easeElasticOut()))
     },
 
     update (dt) {
       // 根据当前加速度方向每帧更新速度
-      if (this.destX < this.node.x ) {
-          this.xSpeed -= this.accel * dt;
-      } else if (this.destX > this.node.x ) {
-          this.xSpeed += this.accel * dt;
-      }
-
-      // 限制主角的速度不能超过最大值
-      if ( Math.abs(this.xSpeed) > this.maxMoveSpeed ) {
-          // if speed reach limit, use max speed with current direction
-          this.xSpeed = this.maxMoveSpeed * this.xSpeed / Math.abs(this.xSpeed);
-      }
-
-      // 根据当前速度更新主角的位置
-      this.node.x += this.xSpeed * dt;
-      var maxX = this.node.parent.width/2*0.8;
-      var minX = -maxX;
-      if ( this.node.x > maxX ) {
-        this.node.x = maxX;
-      } else if ( this.node.x < minX ) {
-        this.node.x = minX;
-      }
+      // if (this.destX < this.node.x ) {
+      //     this.xSpeed -= this.accel * dt;
+      // } else if (this.destX > this.node.x ) {
+      //     this.xSpeed += this.accel * dt;
+      // }
+      //
+      // // 限制主角的速度不能超过最大值
+      // if ( Math.abs(this.xSpeed) > this.maxMoveSpeed ) {
+      //     // if speed reach limit, use max speed with current direction
+      //     this.xSpeed = this.maxMoveSpeed * this.xSpeed / Math.abs(this.xSpeed);
+      // }
+      //
+      // // 根据当前速度更新主角的位置
+      // this.node.x += this.xSpeed * dt;
+      // var maxX = this.node.parent.width/2*0.8;
+      // var minX = -maxX;
+      // if ( this.node.x > maxX ) {
+      //   this.node.x = maxX;
+      // } else if ( this.node.x < minX ) {
+      //   this.node.x = minX;
+      // }
     },
 });
