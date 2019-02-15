@@ -41,8 +41,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.38254510788690477,
-      "y": 0.38254510788690477,
+      "x": 0.1406422599259027,
+      "y": 0.1406422599259027,
       "z": 1
     },
     "_quat": {
@@ -332,8 +332,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 360,
-      "height": 90
+      "width": 420,
+      "height": 70
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -378,10 +378,10 @@
     "_srcBlendFactor": 1,
     "_dstBlendFactor": 771,
     "_useOriginalSize": false,
-    "_string": "点击开始",
-    "_N$string": "点击开始",
-    "_fontSize": 90,
-    "_lineHeight": 90,
+    "_string": "点击开始流浪",
+    "_N$string": "点击开始流浪",
+    "_fontSize": 70,
+    "_lineHeight": 70,
     "_enableWrapText": true,
     "_N$file": null,
     "_isSystemFontUsed": true,
@@ -419,7 +419,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 480,
+      "width": 600,
       "height": 120
     },
     "_anchorPoint": {
@@ -465,8 +465,8 @@
     "_srcBlendFactor": 1,
     "_dstBlendFactor": 771,
     "_useOriginalSize": false,
-    "_string": "流浪地球",
-    "_N$string": "流浪地球",
+    "_string": "地球流浪去",
+    "_N$string": "地球流浪去",
     "_fontSize": 120,
     "_lineHeight": 120,
     "_enableWrapText": true,

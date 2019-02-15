@@ -17,7 +17,7 @@
         "__id__": 2
       }
     ],
-    "_active": true,
+    "_active": false,
     "_level": 0,
     "_components": [],
     "_prefab": null,
@@ -41,8 +41,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.38541276236881555,
-      "y": 0.38541276236881555,
+      "x": 0.38445230509745126,
+      "y": 0.38445230509745126,
       "z": 1
     },
     "_quat": {
@@ -91,7 +91,7 @@
       }
     ],
     "_active": true,
-    "_level": 0,
+    "_level": 1,
     "_components": [
       {
         "__id__": 41
@@ -350,7 +350,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "label",
+    "_name": "scoreTitle",
     "_objFlags": 0,
     "_parent": {
       "__id__": 2
@@ -1567,7 +1567,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 100,
+      "width": 150,
       "height": 40
     },
     "_anchorPoint": {
@@ -1628,7 +1628,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 100,
+      "width": 150,
       "height": 40
     },
     "_anchorPoint": {
@@ -1674,8 +1674,8 @@
     "_srcBlendFactor": 1,
     "_dstBlendFactor": 771,
     "_useOriginalSize": false,
-    "_string": "再浪一次",
-    "_N$string": "再浪一次",
+    "_string": "开始火种计划",
+    "_N$string": "开始火种计划",
     "_fontSize": 20,
     "_lineHeight": 40,
     "_enableWrapText": false,
@@ -1900,7 +1900,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "label",
+    "_name": "gameOverDesc",
     "_objFlags": 0,
     "_parent": {
       "__id__": 28
@@ -2102,6 +2102,15 @@
     },
     "gameOverDialog": {
       "__id__": 40
+    },
+    "scoreTitle": {
+      "__id__": 9
+    },
+    "gameOverTitle": {
+      "__id__": 38
+    },
+    "shipPrefab": {
+      "__uuid__": "509cbbac-11f5-403c-a810-e4ece8788150"
     },
     "_id": "39tBQ8FoNB8JI/auZqGuaK"
   }

@@ -62,7 +62,7 @@ cc.Class({
 
     update (dt) {
       this.node.y += this.speedY*dt;
-      if ( this.node.y < -this.node.parent.height) {
+      if ( this.node.y < -this.node.parent.height || Global.game.isGameOver ) {
         this.node.destroy();
       }
     },

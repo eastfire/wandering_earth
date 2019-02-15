@@ -51,6 +51,22 @@ cc.Class({
       gameOverDialog: {
         default: null,
         type: cc.Layout
+      },
+      scoreTitle: {
+        default: null,
+        type: cc.Label
+      },
+      gameOverTitle: {
+        default: null,
+        type: cc.Label
+      },
+      gameOverButtonText: {
+        default: null,
+        type: cc.Label
+      },
+      shipPrefab: {
+        default: null,
+        type: cc.Prefab
       }
     },
 
@@ -84,6 +100,8 @@ cc.Class({
       this.isGameOver = false;
       this._updateLife()
       this.difficulty = 1;
+      this.attackBase = 1000;
+      this.gameOverTime = 0;
     },
 
     reduceLife(damage){
@@ -96,19 +114,23 @@ cc.Class({
       var asteroid = cc.instantiate(asteroidPrefab);
       asteroid.x = (Math.random()-0.5)*this.node.width*0.85;
       asteroid.y = this.node.height/3*2;
-      asteroid.getComponent("asteroid").attack = Math.floor((Math.random()*5000+5000)*this.difficulty);
+      asteroid.getComponent("asteroid").attack = Math.floor((Math.random()*3*this.attackBase+2*this.attackBase)*this.difficulty);
       asteroid.getComponent("asteroid").speedY = -Math.floor(Math.random()*100*(1+(this.difficulty-1)/5)+200);
-      asteroid.setScale(1+Math.random()*Math.min(2,(this.difficulty-1)/10))
+      asteroid.setScale(1+Math.random()*Math.min(2,(this.difficulty-1)/20))
       this.node.addChild(asteroid)
     },
     _updateLife(){
-      var yi = Math.floor(this.life/10000);
-      var wan = this.life % 10000;
-      if ( yi ) {
-        this.lifeLabel.string = yi+"亿";
-        if ( wan ) this.lifeLabel.string += wan+"万";
+      if ( this.gameOverTime == 1 ) {
+        this.lifeLabel.string = this.life+"人"
       } else {
-        this.lifeLabel.string = wan+"万";
+        var yi = Math.floor(this.life/10000);
+        var wan = this.life % 10000;
+        if ( yi ) {
+          this.lifeLabel.string = yi+"亿";
+          if ( wan ) this.lifeLabel.string += wan+"万";
+        } else {
+          this.lifeLabel.string = wan+"万";
+        }
       }
     },
     update (dt) {
@@ -121,7 +143,7 @@ cc.Class({
       if ( this.totalTime - this.lastDifficultyChangeTime > 5 ) {
         this.difficulty+=1;
         this.lastDifficultyChangeTime = this.totalTime;
-        this.generateTime = Math.max(0.7,this.generateTime - 0.1);
+        this.generateTime = Math.max(0.5,this.generateTime - 0.1);
       }
       if ( this.time > this.generateTime ) {
         this.time = 0;
@@ -142,11 +164,32 @@ cc.Class({
       }
     },
     restart(){
-      cc.director.loadScene("main");
+      this.gameOverDialog.node.runAction(cc.hide());
+      if ( this.gameOverTime == 1 ) {
+        this.earth = cc.instantiate(this.shipPrefab);
+        this.earth.x = 0;
+        this.earth.y = -320;
+        this.node.addChild(this.earth)
+        this.scoreTitle.string = "幸存人数"
+        this.gameOverButtonText.string = "再浪一次"
+        this.gameOverTitle.string = "道路千万条，安全第一条\n航船不规范，人类两行泪"
+        this.isGameOver = false;
+        this.targetLife = this.life = 10000;
+        this.attackBase = 30;
+        this._updateLife()
+        // this.difficulty = Math.floor(this.difficulty*2/3)
+      } else {
+        cc.director.loadScene("main");
+      }
     },
     gameOver(){
       this.isGameOver = true;
-      this.earth.node.runAction(cc.sequence(cc.fadeOut(0.5), cc.removeSelf()))
+      this.gameOverTime++;
+      if ( this.gameOverTime == 1 ) {
+        this.earth.node.runAction(cc.sequence(cc.fadeOut(0.5), cc.removeSelf()))
+      } else {
+        this.earth.runAction(cc.sequence(cc.fadeOut(0.5), cc.removeSelf()))
+      }
       this.gameOverDialog.node.runAction(cc.show());
     }
 });

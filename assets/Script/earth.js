@@ -47,7 +47,7 @@ cc.Class({
       var minX = -maxX;
       destX = Math.max(minX, Math.min(destX, maxX))
       var distance = Math.abs(destX - this.node.x)
-      cc.log("destX"+destX+" distance"+distance)
+
       if ( this.moveAction )
         this.node.stopAction(this.moveAction)
       this.moveAction = this.node.runAction(cc.moveTo(distance/this.maxMoveSpeed, destX, this.node.y).easing(cc.easeElasticOut()))
