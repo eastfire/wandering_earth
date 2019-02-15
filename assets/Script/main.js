@@ -80,16 +80,18 @@ cc.Class({
 
       this.node.on('touchstart', ( event ) => {
         var locationInNode = event.getLocation();
-        // this.earth.getComponent("earth").destX = locationInNode.x - this.node.width/2
-        this.earth.getComponent("earth").moveTo(locationInNode.x - this.node.width/2)
+        this.earth.getComponent("earth").destX = locationInNode.x - this.node.width/2
+        // this.earth.getComponent("earth").moveTo(locationInNode.x - this.node.width/2)
       });
       this.node.on('touchmove', ( event ) => {
         var locationInNode = event.getLocation();
-        // this.earth.getComponent("earth").destX = locationInNode.x - this.node.width/2
+        this.earth.getComponent("earth").destX = locationInNode.x - this.node.width/2
         // this.earth.getComponent("earth").moveTo(locationInNode.x - this.node.width/2)
       });
       this.node.on('touchend', ( event ) => {
-        //this.earth.getComponent("earth").destX = this.earth.node.x;
+        var locationInNode = event.getLocation();
+        this.earth.getComponent("earth").destX = this.earth.node.x;
+        // this.earth.getComponent("earth").moveTo(locationInNode.x - this.node.width/2)
       });
       this.time = 10;
       this.totalTime = 0;
