@@ -161,7 +161,7 @@ window.boot = function () {
     cc.game.run(option, onStart);
 };
 
-// main.0ed06.js is qqplay and jsb platform entry file, so we must leave platform init code here
+// main.3d557.js is qqplay and jsb platform entry file, so we must leave platform init code here
 if (false) {
     BK.Script.loadlib('GameRes://src/settings.js');
     BK.Script.loadlib();
@@ -187,12 +187,12 @@ if (false) {
 else if (window.jsb) {
     var isRuntime = (typeof loadRuntime === 'function');
     if (isRuntime) {
-        require('src/settings.30379.js');
+        require('src/settings.47095.js');
         require('src/cocos2d-runtime.js');
         require('jsb-adapter/engine/index.js');
     }
     else {
-        require('src/settings.30379.js');
+        require('src/settings.47095.js');
         require('src/cocos2d-jsb.js');
         require('jsb-adapter/jsb-engine.js');
     }
