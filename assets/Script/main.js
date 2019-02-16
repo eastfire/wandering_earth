@@ -28,10 +28,6 @@ cc.Class({
         //         this._bar = value;
         //     }
         // },
-      earth: {
-        default: null,
-        type: cc.Sprite
-      },
       asteroids : [cc.Prefab],
       scoreLabel: {
         default: null,
@@ -52,19 +48,19 @@ cc.Class({
         default: null,
         type: cc.Layout
       },
+      gameOverDialog2: {
+        default: null,
+        type: cc.Layout
+      },
       scoreTitle: {
         default: null,
         type: cc.Label
       },
-      gameOverTitle: {
-        default: null,
-        type: cc.Label
-      },
-      gameOverButtonText: {
-        default: null,
-        type: cc.Label
-      },
       shipPrefab: {
+        default: null,
+        type: cc.Prefab
+      },
+      earthPrefab:{
         default: null,
         type: cc.Prefab
       }
@@ -75,24 +71,29 @@ cc.Class({
     // onLoad () {},
 
     start () {
-      this.gameOverDialog.node.runAction(cc.hide());
-      this.earth.getComponent("earth").destX = this.earth.node.x = 0;
+      this.earth = cc.instantiate(this.earthPrefab);
+      this.earth.x = 0;
+      this.earth.y = -320;
+      this.node.addChild(this.earth)
+
+      this.earth.getComponent("earth").destX = this.earth.x = 0;
 
       this.node.on('touchstart', ( event ) => {
         var locationInNode = event.getLocation();
-        this.earth.getComponent("earth").destX = locationInNode.x - this.node.width/2
-        // this.earth.getComponent("earth").moveTo(locationInNode.x - this.node.width/2)
+        this.earth.getComponent("earth").moveTo(locationInNode.x - this.node.width/2)
       });
       this.node.on('touchmove', ( event ) => {
         var locationInNode = event.getLocation();
-        this.earth.getComponent("earth").destX = locationInNode.x - this.node.width/2
-        // this.earth.getComponent("earth").moveTo(locationInNode.x - this.node.width/2)
+        this.earth.getComponent("earth").moveTo(locationInNode.x - this.node.width/2)
       });
       this.node.on('touchend', ( event ) => {
         var locationInNode = event.getLocation();
-        this.earth.getComponent("earth").destX = this.earth.node.x;
+        this.earth.getComponent("earth").moveTo(locationInNode.x - this.node.width/2)
         // this.earth.getComponent("earth").moveTo(locationInNode.x - this.node.width/2)
       });
+
+      cc.systemEvent.setAccelerometerEnabled(true);
+      cc.systemEvent.on(cc.SystemEvent.EventType.DEVICEMOTION, this.onDeviceMotionEvent, this);
       this.time = 10;
       this.totalTime = 0;
       this.lastDifficultyChangeTime = 0;
@@ -104,6 +105,17 @@ cc.Class({
       this.difficulty = 1;
       this.attackBase = 1000;
       this.gameOverTime = 0;
+
+
+    },
+
+    onDestroy () {
+      cc.systemEvent.setAccelerometerEnabled(false);
+      cc.systemEvent.off(cc.SystemEvent.EventType.DEVICEMOTION, this.onDeviceMotionEvent, this);
+    },
+
+    onDeviceMotionEvent (event) {
+      this.earth.getComponent("earth").directTo(event.acc.x)
     },
 
     reduceLife(damage){
@@ -166,15 +178,14 @@ cc.Class({
       }
     },
     restart(){
-      this.gameOverDialog.node.runAction(cc.hide());
+      this.gameOverDialog.node.runAction(cc.moveTo(0.4,-700,0));
       if ( this.gameOverTime == 1 ) {
         this.earth = cc.instantiate(this.shipPrefab);
         this.earth.x = 0;
         this.earth.y = -320;
+        this.earth.getComponent("earth").maxMoveSpeed = 200;
         this.node.addChild(this.earth)
         this.scoreTitle.string = "幸存人数"
-        this.gameOverButtonText.string = "再浪一次"
-        this.gameOverTitle.string = "道路千万条，安全第一条\n航船不规范，人类两行泪"
         this.isGameOver = false;
         this.targetLife = this.life = 10000;
         this.attackBase = 30;
@@ -188,10 +199,12 @@ cc.Class({
       this.isGameOver = true;
       this.gameOverTime++;
       if ( this.gameOverTime == 1 ) {
-        this.earth.node.runAction(cc.sequence(cc.fadeOut(0.5), cc.removeSelf()))
+        this.earth.runAction(cc.sequence(cc.fadeOut(0.5), cc.removeSelf()))
+        this.gameOverDialog.node.runAction(cc.moveTo(0.4,0,0));
       } else {
         this.earth.runAction(cc.sequence(cc.fadeOut(0.5), cc.removeSelf()))
+        this.gameOverDialog2.node.runAction(cc.moveTo(0.4,0,9));
       }
-      this.gameOverDialog.node.runAction(cc.show());
+
     }
 });

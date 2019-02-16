@@ -1,7 +1,12 @@
 {
   "collision-matrix": [
     [
+      false,
       true
+    ],
+    [
+      true,
+      false
     ]
   ],
   "design-resolution-height": 640,
@@ -41,7 +46,8 @@
   "fit-height": true,
   "fit-width": true,
   "group-list": [
-    "default"
+    "default",
+    "asteroid"
   ],
   "last-module-event-record-time": 1550197014195,
   "simulator-orientation": false,
