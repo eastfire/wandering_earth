@@ -202,7 +202,7 @@ cc.Class({
         this.earth = cc.instantiate(this.shipPrefab);
         this.earth.x = 0;
         this.earth.y = -320;
-        this.earth.getComponent("earth").maxMoveSpeed = 200;
+        this.earth.getComponent("earth").maxMoveSpeed = 300;
         this.playLayer.addChild(this.earth)
         this.scoreTitle.string = "幸存人数"
         this.isGameOver = false;
