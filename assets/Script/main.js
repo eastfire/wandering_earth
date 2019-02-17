@@ -63,6 +63,14 @@ cc.Class({
       earthPrefab:{
         default: null,
         type: cc.Prefab
+      },
+      playLayer: {
+        default: null,
+        type: cc.Node
+      },
+      effectPrefab: {
+        type: cc.Prefab,
+        default: null
       }
     },
 
@@ -74,7 +82,7 @@ cc.Class({
       this.earth = cc.instantiate(this.earthPrefab);
       this.earth.x = 0;
       this.earth.y = -320;
-      this.node.addChild(this.earth)
+      this.playLayer.addChild(this.earth)
 
       this.earth.getComponent("earth").destX = this.earth.x = 0;
 
@@ -103,7 +111,7 @@ cc.Class({
       this.isGameOver = false;
       this._updateLife()
       this.difficulty = 1;
-      this.attackBase = 1000;
+      this.attackBase = 2000;
       this.gameOverTime = 0;
 
 
@@ -121,17 +129,27 @@ cc.Class({
     reduceLife(damage){
       this.targetLife = Math.max(0, this.targetLife-damage);
       this.lifeLabel.node.color = cc.Color.RED;
+      this.lifeLabel.node.runAction(cc.sequence(cc.scaleTo(0.1,0.8), cc.scaleTo(0.3,1)))
     },
 
     generateAsteroid() {
-      var asteroidPrefab = this.asteroids[Math.floor(Math.random()*this.asteroids.length)]
+      var asteroidPrefab = this.asteroids[Math.floor(Math.random()*(this.asteroids.length))]
       var asteroid = cc.instantiate(asteroidPrefab);
       asteroid.x = (Math.random()-0.5)*this.node.width*0.85;
       asteroid.y = this.node.height/3*2;
-      asteroid.getComponent("asteroid").attack = Math.floor((Math.random()*3*this.attackBase+2*this.attackBase)*this.difficulty);
+      asteroid.getComponent("asteroid").attack = Math.floor((Math.random()*3*this.attackBase+3*this.attackBase)*(this.difficulty/2));
       asteroid.getComponent("asteroid").speedY = -Math.floor(Math.random()*100*(1+(this.difficulty-1)/5)+200);
-      asteroid.setScale(1+Math.random()*Math.min(2,(this.difficulty-1)/20))
-      this.node.addChild(asteroid)
+      asteroid.setScale(1+Math.random()*Math.min(1.5,(this.difficulty-1)/20))
+      this.playLayer.addChild(asteroid)
+    },
+    levelStrategy1(){
+
+    },
+    levelStrategy2(){
+
+    },
+    levelStrategy3(){
+
     },
     _updateLife(){
       if ( this.gameOverTime == 1 ) {
@@ -157,7 +175,7 @@ cc.Class({
       if ( this.totalTime - this.lastDifficultyChangeTime > 5 ) {
         this.difficulty+=1;
         this.lastDifficultyChangeTime = this.totalTime;
-        this.generateTime = Math.max(0.5,this.generateTime - 0.1);
+        this.generateTime = Math.max(0.7,this.generateTime - 0.1);
       }
       if ( this.time > this.generateTime ) {
         this.time = 0;
@@ -177,18 +195,19 @@ cc.Class({
 
       }
     },
+
     restart(){
-      this.gameOverDialog.node.runAction(cc.moveTo(0.4,-700,0));
+      this.gameOverDialog.node.runAction(cc.moveTo(0.5,-800,0));
       if ( this.gameOverTime == 1 ) {
         this.earth = cc.instantiate(this.shipPrefab);
         this.earth.x = 0;
         this.earth.y = -320;
         this.earth.getComponent("earth").maxMoveSpeed = 200;
-        this.node.addChild(this.earth)
+        this.playLayer.addChild(this.earth)
         this.scoreTitle.string = "幸存人数"
         this.isGameOver = false;
         this.targetLife = this.life = 10000;
-        this.attackBase = 30;
+        this.attackBase = 50;
         this._updateLife()
         // this.difficulty = Math.floor(this.difficulty*2/3)
       } else {

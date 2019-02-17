@@ -49,8 +49,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 71,
-      "height": 96
+      "width": 93,
+      "height": 93
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -122,7 +122,7 @@
     },
     "_position": {
       "__type__": "cc.Vec3",
-      "x": -16,
+      "x": -18,
       "y": -35,
       "z": 0
     },
@@ -132,19 +132,19 @@
       "y": 1,
       "z": 1
     },
-    "_rotationX": 180,
-    "_rotationY": 180,
+    "_rotationX": 0,
+    "_rotationY": 0,
     "_quat": {
       "__type__": "cc.Quat",
       "x": 0,
       "y": 0,
-      "z": -1,
-      "w": 6.123233995736766e-17
+      "z": 0,
+      "w": 1
     },
     "_skewX": 0,
     "_skewY": 0,
     "_zIndex": 0,
-    "groupIndex": 0,
+    "groupIndex": 2,
     "_id": ""
   },
   {
@@ -157,7 +157,7 @@
     "_enabled": true,
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 1,
-    "_custom": false,
+    "_custom": true,
     "_file": {
       "__uuid__": "127e7962-b028-47e8-b00d-f6235c90a56a"
     },
@@ -167,11 +167,11 @@
     "_stopped": true,
     "playOnLoad": true,
     "autoRemoveOnFinish": false,
-    "totalParticles": 84,
+    "totalParticles": 24,
     "duration": -1,
     "emissionRate": 1.7976931348623157e+308,
     "life": 0,
-    "lifeVar": 0.52,
+    "lifeVar": 0.72,
     "_startColor": {
       "__type__": "cc.Color",
       "r": 45,
@@ -200,16 +200,16 @@
       "b": 112,
       "a": 255
     },
-    "angle": 90,
+    "angle": -90,
     "angleVar": 14,
     "startSize": 42,
     "startSizeVar": 3,
-    "endSize": 16,
-    "endSizeVar": 16,
+    "endSize": 6,
+    "endSizeVar": 6,
     "startSpin": 0,
     "startSpinVar": 0,
     "endSpin": 0,
-    "endSpinVar": 0,
+    "endSpinVar": 90,
     "sourcePos": {
       "__type__": "cc.Vec2",
       "x": 0,
@@ -292,7 +292,7 @@
     },
     "_position": {
       "__type__": "cc.Vec3",
-      "x": 14,
+      "x": 18,
       "y": -35,
       "z": 0
     },
@@ -302,19 +302,19 @@
       "y": 1,
       "z": 1
     },
-    "_rotationX": 180,
-    "_rotationY": 180,
+    "_rotationX": 0,
+    "_rotationY": 0,
     "_quat": {
       "__type__": "cc.Quat",
       "x": 0,
       "y": 0,
-      "z": -1,
-      "w": 6.123233995736766e-17
+      "z": 0,
+      "w": 1
     },
     "_skewX": 0,
     "_skewY": 0,
     "_zIndex": 0,
-    "groupIndex": 0,
+    "groupIndex": 2,
     "_id": ""
   },
   {
@@ -327,7 +327,7 @@
     "_enabled": true,
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 1,
-    "_custom": false,
+    "_custom": true,
     "_file": {
       "__uuid__": "127e7962-b028-47e8-b00d-f6235c90a56a"
     },
@@ -337,11 +337,11 @@
     "_stopped": true,
     "playOnLoad": true,
     "autoRemoveOnFinish": false,
-    "totalParticles": 84,
+    "totalParticles": 24,
     "duration": -1,
     "emissionRate": 1.7976931348623157e+308,
     "life": 0,
-    "lifeVar": 0.52,
+    "lifeVar": 0.72,
     "_startColor": {
       "__type__": "cc.Color",
       "r": 45,
@@ -370,16 +370,16 @@
       "b": 112,
       "a": 255
     },
-    "angle": 90,
+    "angle": -90,
     "angleVar": 14,
     "startSize": 42,
     "startSizeVar": 3,
-    "endSize": 16,
-    "endSizeVar": 16,
+    "endSize": 6,
+    "endSizeVar": 6,
     "startSpin": 0,
     "startSpinVar": 0,
     "endSpin": 0,
-    "endSpinVar": 0,
+    "endSpinVar": 90,
     "sourcePos": {
       "__type__": "cc.Vec2",
       "x": 0,
@@ -421,7 +421,7 @@
     "asset": {
       "__uuid__": "509cbbac-11f5-403c-a810-e4ece8788150"
     },
-    "fileId": "0eK+d/pO1Kpon3I/QumOcn",
+    "fileId": "12HvdZvSJIBaJzDZlP2KvY",
     "sync": false
   },
   {
@@ -462,6 +462,8 @@
     "_enabled": true,
     "direction": 0,
     "maxMoveSpeed": 100,
+    "acc": 0,
+    "maxAcc": 300,
     "_id": ""
   },
   {
@@ -481,13 +483,13 @@
     "points": [
       {
         "__type__": "cc.Vec2",
-        "x": -35.6,
-        "y": -47.8
+        "x": -43.1,
+        "y": -46.6
       },
       {
         "__type__": "cc.Vec2",
-        "x": 35.2,
-        "y": -47.8
+        "x": 43,
+        "y": -46.2
       },
       {
         "__type__": "cc.Vec2",

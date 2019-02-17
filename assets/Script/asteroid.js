@@ -29,7 +29,9 @@ cc.Class({
         //     }
         // },
         attack: 100,
-        speedY: -250
+        speedY: -250,
+
+
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -48,12 +50,45 @@ cc.Class({
         cc.audioEngine.play(Global.game.explosion, false, 0.5);
         this.node.runAction(cc.sequence(
           cc.fadeOut(0.4),
-          cc.callFunc(function(){
-            this.node.destroy();
-          },this)
+          cc.removeSelf()
         ))
         Global.game.reduceLife(this.attack);
+        var effect = cc.instantiate(Global.game.effectPrefab)
+        effect.x = (this.node.x+other.node.x)/2;
+        effect.y = (this.node.y+other.node.y)/2;
+        effect.rotation = Math.random()*360
+        effect.setScale(0)
+        var word = ["爆","炸","轰"]
+        effect.getComponent(cc.Label).string = word[Math.floor(Math.random()*word.length)]
+        Global.game.playLayer.addChild(effect)
+        effect.runAction(cc.sequence(
+          cc.scaleTo(0.5,1.5).easing(cc.easeCubicActionIn()),
+          cc.removeSelf()
+        ))
 
+        var debritNumber = Math.floor(Math.random()*3+1)
+        for ( var i = 0 ; i < debritNumber; i++){
+          var effect = cc.instantiate(Global.game.effectPrefab)
+          effect.x = this.node.x
+          effect.y = this.node.y
+          effect.rotation = Math.random()*360
+          effect.setScale(0.7)
+          var word = ["碎","片","石","破","裂"]
+          var colors = [cc.Color.GRAY, cc.color(148,148,148,255), cc.color(88,88,88,255)]
+          effect.getComponent(cc.Label).string = word[Math.floor(Math.random()*word.length)]
+          effect.color = colors[Math.floor(Math.random()*colors.length)]
+          Global.game.playLayer.addChild(effect)
+          var xx = Math.random()*100-50;
+          var yy = Math.random()*100-50;
+          xx = xx || 50;
+          yy = yy || 50;
+          xx += 100*Math.abs(xx)/xx
+          yy += 100*Math.abs(yy)/yy
+          effect.runAction(cc.sequence(
+            cc.spawn(cc.rotateBy(0.6,Math.random()*360),cc.moveBy(0.6, xx, yy)),
+            cc.removeSelf()
+          ))
+        }
       }
     },
 

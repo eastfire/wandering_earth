@@ -7,6 +7,11 @@
     [
       true,
       false
+    ],
+    [
+      false,
+      false,
+      false
     ]
   ],
   "design-resolution-height": 640,
@@ -47,7 +52,8 @@
   "fit-width": true,
   "group-list": [
     "default",
-    "asteroid"
+    "asteroid",
+    "noeffect"
   ],
   "last-module-event-record-time": 1550197014195,
   "simulator-orientation": false,
